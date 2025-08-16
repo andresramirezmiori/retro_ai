@@ -1,15 +1,12 @@
-🧠 RetroIA – Retrospectivas asistidas con agentes de IA
+# 🧠 RetroIA – Retrospectivas asistidas con agentes de IA
 
 RetroIA es una herramienta para facilitar retrospectivas de equipo asistidas por inteligencia artificial. Pensado para equipos distribuidos, propone una nueva forma de hacer retrospectivas: más personal, más asincrónica y completamente mediada por asistentes virtuales.
-
-> 🌟 El objetivo no es reemplazar la dinámica humana, sino hacerla más fluida, inclusiva y automatizable.
-
 
 
 
 ---
 
-🚀 ¿Qué hace diferente a RetroIA?
+## 🚀 ¿Qué hace diferente a RetroIA?
 
 Cada participante interactúa con su propio agente IA (TerapIA), que lo guía y ayuda a registrar sus ideas.
 
@@ -23,7 +20,7 @@ Todo queda guardado: los ítems, las conversaciones, los comentarios, los action
 
 ---
 
-🛠 Estado del proyecto
+## 🛠 Estado del proyecto
 
 Este repositorio es una prueba de concepto abierta. Está en desarrollo, con foco en experimentar con ideas, agentes, herramientas y experiencia de usuario.
 
@@ -34,7 +31,7 @@ Este repositorio es una prueba de concepto abierta. Está en desarrollo, con foc
 
 ---
 
-🔪 MVP - Primer versión funcional
+## 🔪 MVP - Primer versión funcional
 
 ¿Qué se podrá hacer?
 
@@ -72,7 +69,7 @@ Base de datos: SQLite (por ahora)
 
 Agentes: pydantic-ai
 
-Frontend: HTML + jQuery minimal (sin framework por ahora)
+Frontend: HTML + jQuery minimal (sin framework por ahora, debera conectar con el websocket creado desde el backend)
 
 
 
@@ -81,6 +78,9 @@ Frontend: HTML + jQuery minimal (sin framework por ahora)
 📆 Modelo de datos
 
 El sistema incluye las siguientes entidades:
+
+![DER](docs/images/DER.png "Modelos RetroIA")
+
 
 Retro: instancia de retrospectiva
 
@@ -95,7 +95,7 @@ ActionItem: acciones derivadas de ítems
 Comment: observaciones del admin
 
 
-El DER completo está disponible en la carpeta docs.
+Las fuentes de la imagen DER estan en docs/images
 
 
 ---
