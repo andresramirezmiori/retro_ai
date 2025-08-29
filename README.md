@@ -118,9 +118,19 @@ Autenticación o integración con Slack/Meet
 
 ---
 
-🧪 Cómo correrlo
+## 🧪 Cómo correrlo
 
-A completar cuando esté el primer código disponible.
+1. Instalar dependencias:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+2. Ejecutar el servidor:
+
+```bash
+uvicorn src.main:app --reload
+```
 
 
 ---
