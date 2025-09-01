@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RetroIA – Retro de prueba</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        header {
+            padding: 1rem;
+            background-color: #0d47a1;
+            color: #fff;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        /* Main columns area */
+        .columns {
+            flex: 3;
+            display: flex;
+            padding: 1rem;
+            gap: 1rem;
+        }
+        .column {
+            flex: 1;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .column h2 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #0d47a1;
+        }
+        .cards {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .card {
+            background: #e3f2fd;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        /* Sidebar area */
+        .sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            background: #fafafa;
+            box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+        .participants h3, .chat h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #0d47a1;
+        }
+        .participants {
+            margin-bottom: 1rem;
+        }
+        .participant {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .participant .avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #90caf9;
+            margin-right: 0.5rem;
+        }
+        .chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.5rem;
+            background: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .message {
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+        }
+        .message.user {
+            text-align: right;
+            color: #1e88e5;
+        }
+        .message.ai {
+            text-align: left;
+            color: #004d40;
+        }
+        .input {
+            display: flex;
+        }
+        .input input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 0.9rem;
+        }
+        .input button {
+            margin-left: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: #0d47a1;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .input button:hover {
+            background: #1565c0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Retro: Retro de prueba</h1>
+</header>
+<div class="container">
+    <div class="columns">
+        <div class="column">
+            <h2>Continuar haciendo</h2>
+            <div class="cards">
+                <div class="card">Ejemplo: Buen trabajo en la integración continua</div>
+                <div class="card">Otro ejemplo de ítem positivo</div>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Hacer distinto</h2>
+            <div class="cards">
+                <div class="card">Ejemplo: Mejorar la comunicación en el equipo</div>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Dejar de hacer</h2>
+            <div class="cards">
+                <div class="card">Ejemplo: Evitar reuniones innecesarias y largas</div>
+            </div>
+        </div>
+    </div>
+    <aside class="sidebar">
+        <div class="participants">
+            <h3>Participantes</h3>
+            <div class="participant"><span class="avatar"></span> Santi (2)</div>
+            <div class="participant"><span class="avatar"></span> Andy (1)</div>
+        </div>
+        <div class="chat">
+            <h3>Chat con IA</h3>
+            <div class="messages">
+            </div>
+            <div class="input">
+                <input type="text" placeholder="Escribe un mensaje...">
+            </div>
+        </div>
+    </aside>
+</div>
+<script>
+  const retroId = "123";  // podés hacerlo dinámico después
+  const socket = new WebSocket(`ws://localhost:8000/ws/retro/${retroId}`);
+
+  socket.onmessage = function(event) {
+    const msg = event.data;
+    const messages = document.querySelector(".messages");
+    const div = document.createElement("div");
+    div.classList.add("message", "ai");
+    div.textContent = msg;
+    messages.appendChild(div);
+    };
+
+  function sendToIA() {
+    const input = document.querySelector(".chat input");
+      const value = input.value;
+    if (!value) return;
+
+    // mensaje del usuario
+    const messages = document.querySelector(".messages");
+    const userMsg = document.createElement("div");
+    userMsg.classList.add("message", "user");
+    userMsg.textContent = value;
+    messages.appendChild(userMsg);
+
+    // envío al servidor
+    socket.send(value);
+    input.value = "";
+  }
+
+  document.querySelector(".chat input").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") sendToIA();
+  });
+</script>
+</body>
+</html>
