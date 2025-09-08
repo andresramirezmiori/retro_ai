@@ -14,6 +14,6 @@ async def chat_endpoint(websocket: WebSocket, retro_id: str):
         while True:
             data = await websocket.receive_text()
             # Echo back for testing
-            await websocket.send_text(f"Confesionario te responde: {data}")
+            await websocket.send_text(f"Terapia te responde: {data}")
     except WebSocketDisconnect:
         active_connections.remove(websocket)
